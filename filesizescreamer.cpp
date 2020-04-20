@@ -23,13 +23,13 @@ void FileSizeScreamer::addFilePathList(const QStringList& additionalFilePathList
 }
 
 
-void FileSizeScreamer::delFileInfo_FileState(const QString& filePath){
+void FileSizeScreamer::removeFileWithFilePath(const QString& filePath){
     int delIndex = fileInfoList.indexOf(QFileInfo(filePath));
     if (delIndex != -1)
-        delFileInfo_FileState_atIndex(delIndex);
+        removeFileWithIndex(delIndex);
 }
 
-void FileSizeScreamer::delFileInfo_FileState_atIndex(const int i){
+void FileSizeScreamer::removeFileWithIndex(const int i){
     fileInfoList.removeAt(i);
     fileSizeList.removeAt(i);
 }

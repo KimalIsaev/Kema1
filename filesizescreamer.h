@@ -20,7 +20,7 @@ class FileSizeScreamer:public QObject
     FileSizeScreamer();
     void checkFileWithIndex(int);
     ~FileSizeScreamer(){delete instance;};
-    void delFileInfo_FileState_atIndex(const int i);
+    void removeFileWithIndex(const int i);
     void refreshObserver(const int i) const;
 
 public:
@@ -31,7 +31,7 @@ public:
     }
     void addFilePath(const QString&);
     void addFilePathList(const QStringList&);
-    void delFileInfo_FileState(const QString&);
+    void removeFileWithFilePath(const QString&);
     int size() const;
     QString getFilePathWithIndex(const int) const;
     int getFileSizeWithIndex(const int) const;
