@@ -9,20 +9,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::updateScreamerDisplayWidget()
-{
-    ui->screamerList->clear();
-    ui->screamerList->addItems(ScreamerInstance->getFilePathList());
+void MainWindow::updateScreamerDisplayWidget() {
+    ui->screamerListWidget->clear();
+    ui->screamerListWidget->addItems(ScreamerInstance->getFilePathList());
 }
 
-void MainWindow::updateWatcherDisplayWidget()
-{
-    int i = ui->watcherList->currentRow();
+void MainWindow::updateObserverDisplayWidget() {
+    int i = ui->observerListWidget->currentRow();
     /*
     ui->watcherList->clear();
     for(int i=0; i<listWatcher.size(); i++)
@@ -31,57 +28,52 @@ void MainWindow::updateWatcherDisplayWidget()
     */
 }
 
-void MainWindow::addToScreamer()
-{
+void MainWindow::addToScreamer() {
     QString path = ui->screamerLine->text();
-    if (!(path.isEmpty()))
-    {
+    if (!(path.isEmpty())) {
         ScreamerInstance->addFilePath(path);
-        int indexOfFileInScreamer = ScreamerInstance->getIndexOfFile(path);
-        QString absolutePath = ScreamerInstance->getFilePathWithIndex(indexOfFileInScreamer);
-        int fileSize = ScreamerInstance->getFileSizeWithIndex(indexOfFileInScreamer);
+        QString absolutePath = ScreamerInstance->getAbsoluteFilePath(path);
+        int fileSize = ScreamerInstance->getFileSizeWithPath(path);
         updateScreamerDisplayWidget();
 
-        for(int i=0; i<listWatcher.size();i++)
-            if(listWatcher[i].getNameFile()==absolutePath)
-                listWatcher[i].changedState(absolutePath, fileSize);
+        for(int i=0; i<observerList.size();i++)
+            if(observerList[i]->getFilePath()==absolutePath)
+                observerList[i]->fileIsChanged(absolutePath, fileSize);
     }
 }
 
-void MainWindow::delFromScreamer()
-{
-    int i=ui->screamerList->currentRow();
-    ScreamerInstance->removeFileWithIndex(i);
+void MainWindow::delFromScreamer() {
+    int i = ui->screamerListWidget->currentRow();
+    ScreamerInstance->removeFileWithPath(i);
     updateScreamerDisplayWidget();
 }
 
-void MainWindow::addFileToListWatcher()
-{
-    if (!((ui->watcherLineEdit->text()).isEmpty()))
-    {
-        listWatcher.append(FWatcher(ui->watcherLineEdit->text()));
-        QObject :: connect(FManager::getInstance(), &FManager::alterWatcher, &(listWatcher.last()), &FWatcher::changedState);
-        FManager::getInstance()->updateIndex(FManager::getInstance()->findFile(ui->watcherLineEdit->text()));
-        //FManager::getInstance()->updateAll();
-        updateWatcherListWidget();
-        QObject :: connect(&(listWatcher.last()), &FWatcher::signalUpdateWiget, this, &MainWindow::updateWatcherListWidget);
+void MainWindow::addObserver(){
+    QString path = ui->observerLine->text();
+    if (!(path.isEmpty())) {
+        QPointer<FileObserver> newObserver(new FileObserver(path));
+        observerList.append(newObserver);
+        QObject :: connect(ScreamerInstance, &FileSizeScreamer::fileWasChanged, newObserver.data(), &FileObserver::fileIsChanged);
+        QObject :: connect(newObserver.data(), &FileObserver::printSignal, this, &MainWindow::updateObserverDisplayWidget);
+        ScreamerInstance->refreshObserver(ScreamerInstance->getIndexOfFile(path));
     }
 }
 
-void MainWindow::delFileFromListWatcher()
-{
-    int i=ui->watcherListWidget->currentRow();
-    listWatcher.removeAt(i);
-    updateWatcherListWidget();
+void MainWindow::delObserver() {
+    int i=ui->observerListWidget->currentRow();
+    delete observerList[i].data();
+    observerList.removeAt(i);
+    updateObserverDisplayWidget();
 }
 
-void MainWindow::renameWatcher()
-{
-    int i=ui->watcherListWidget->currentRow();
-    if (i>=0 && !(ui->watcherLineEdit->text()).isEmpty())
-    listWatcher[i].renameFile(ui->watcherLineEdit->text());
-    FManager::getInstance()->updateIndex(FManager::getInstance()->findFile(ui->watcherLineEdit->text()));
-    updateWatcherListWidget();
+void MainWindow::renameObserver() {
+    int i = ui->observerListWidget->currentRow();
+    QString path = ui->observerLine->text();
+    if (i>=0 && !path.isEmpty()){
+        observerList[i]->rename(path);
+        ScreamerInstance->updateIndex(ScreamerInstance->getIndexOfFile(path));
+        updateWatcherListWidget();
+    }
 }
 
 
