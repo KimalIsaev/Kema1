@@ -11,9 +11,11 @@ FileSizeScreamer::FileSizeScreamer(){
 
 
 void FileSizeScreamer::addFilePath(const QString& additionalFilePath){
-    fileInfoList.append(QFileInfo(additionalFilePath));
-    fileSizeList.append(INT_MIN);
-    checkFileWithIndex(fileInfoList.size()-1);
+    if (getIndexOfFile(additionalFilePath) < 0){
+        fileInfoList.append(QFileInfo(additionalFilePath));
+        fileSizeList.append(INT_MIN);
+        checkFileWithIndex(fileInfoList.size()-1);
+    }
 }
 
 
@@ -24,8 +26,8 @@ void FileSizeScreamer::addFilePathList(const QStringList& additionalFilePathList
 
 
 void FileSizeScreamer::removeFileWithFilePath(const QString& filePath){
-    int delIndex = fileInfoList.indexOf(QFileInfo(filePath));
-    if (delIndex != -1)
+    int delIndex = getIndexOfFile(filePath);
+    if (delIndex >= 0)
         removeFileWithIndex(delIndex);
 }
 
@@ -75,6 +77,10 @@ QStringList FileSizeScreamer::getFilePathList() const{
     std::transform  (fileInfoList.begin(), fileInfoList.end(), r.begin(),
                     [](QFileInfo f) {return f.absoluteFilePath();});
     return r;
+}
+
+int FileSizeScreamer::getIndexOfFile(const QString path) const{
+    return getFilePathList().indexOf(QFileInfo(path).absoluteFilePath());
 }
 
 int FileSizeScreamer::getFileSizeWithIndex(const int i) const{

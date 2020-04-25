@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "filesizescreamer.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,14 +17,16 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    FileSizeScreamer* ScreamerInstance = FileSizeScreamer::getInstance();
 public slots:
-    void addToManager();
-    void delFromManager();
+    void addToScreamer();
+    void delFromScreamer();
+    void updateScreamerDisplayWidget();
     void addWatcher();
     void delWatcher();
     void renameWatcher();
     void updateWatcherDisplayWidget();
-    void updateManagerDisplayWidget();
+
 };
 
 #endif // MAINWINDOW_H

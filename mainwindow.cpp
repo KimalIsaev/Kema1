@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,41 +14,45 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::updateManagerDisplayWidget()
+void MainWindow::updateScreamerDisplayWidget()
 {
-    ui->managerListWidget->clear();
-    ui->managerListWidget->addItems(FManager::getInstance()->getNameList());
+    ui->screamerList->clear();
+    ui->screamerList->addItems(ScreamerInstance->getFilePathList());
 }
 
-void MainWindow::updateWatcherListWidget()
+void MainWindow::updateWatcherDisplayWidget()
 {
-    int i = ui->watcherListWidget->currentRow();
-    ui->watcherListWidget->clear();
+    int i = ui->watcherList->currentRow();
+    /*
+    ui->watcherList->clear();
     for(int i=0; i<listWatcher.size(); i++)
         ui->watcherListWidget->addItem(listWatcher[i].getToStringInfo());
     ui->watcherListWidget->setCurrentRow(i);
+    */
 }
 
-void MainWindow::addFileToManager()
+void MainWindow::addToScreamer()
 {
-    if (!((ui->managerLineEdit->text()).isEmpty()))
+    QString path = ui->screamerLine->text();
+    if (!(path.isEmpty()))
     {
-        QFileInfo file(ui->managerLineEdit->text());
-        FManager::getInstance()->addFile(ui->managerLineEdit->text());
-        updateManagerListWidget();
+        ScreamerInstance->addFilePath(path);
+        int indexOfFileInScreamer = ScreamerInstance->getIndexOfFile(path);
+        QString absolutePath = ScreamerInstance->getFilePathWithIndex(indexOfFileInScreamer);
+        int fileSize = ScreamerInstance->getFileSizeWithIndex(indexOfFileInScreamer);
+        updateScreamerDisplayWidget();
+
         for(int i=0; i<listWatcher.size();i++)
-        {
-            if(listWatcher[i].getNameFile()==file.absoluteFilePath())
-                listWatcher[i].changedState(file.absoluteFilePath(), file.size(),file.exists());
-        }
+            if(listWatcher[i].getNameFile()==absolutePath)
+                listWatcher[i].changedState(absolutePath, fileSize);
     }
 }
 
-void MainWindow::delFileFromManager()
+void MainWindow::delFromScreamer()
 {
-    int i=ui->managerListWidget->currentRow();
-    FManager::getInstance()->delFile(i);
-    updateManagerListWidget();
+    int i=ui->screamerList->currentRow();
+    ScreamerInstance->removeFileWithIndex(i);
+    updateScreamerDisplayWidget();
 }
 
 void MainWindow::addFileToListWatcher()
