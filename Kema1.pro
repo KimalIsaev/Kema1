@@ -1,6 +1,7 @@
-QT -= gui
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++1z console
+CONFIG += c++1z
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -18,6 +19,7 @@ SOURCES += \
         fileobserver.cpp \
         filesizescreamer.cpp \
         main.cpp \
+        mainwindow.cpp \
         utils.cpp
 
 # Default rules for deployment.
@@ -28,4 +30,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     fileobserver.h \
     filesizescreamer.h \
+    mainwindow.h \
     utils.h
+
+FORMS += \
+    mainwindow.ui
