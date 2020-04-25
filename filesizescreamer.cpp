@@ -70,6 +70,12 @@ QString FileSizeScreamer::getFilePathWithIndex(const int i) const{
     return fileInfoList[i].absoluteFilePath();
 }
 
+QStringList FileSizeScreamer::getFilePathList() const{
+    QStringList r;
+    std::transform  (fileInfoList.begin(), fileInfoList.end(), r.begin(),
+                    [](QFileInfo f) {return f.absoluteFilePath();});
+    return r;
+}
 
 int FileSizeScreamer::getFileSizeWithIndex(const int i) const{
     return fileSizeList[i];

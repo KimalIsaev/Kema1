@@ -36,6 +36,7 @@ public:
     QString getFilePathWithIndex(const int) const;
     int getFileSizeWithIndex(const int) const;
     void refresh() const;
+    QStringList getFilePathList() const;
 public slots:
     void check();
 
