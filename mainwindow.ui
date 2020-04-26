@@ -77,7 +77,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="QListWidget" name="observerListWidget"/>
+      <widget class="QTableWidget" name="tableWidget"/>
      </widget>
     </item>
    </layout>

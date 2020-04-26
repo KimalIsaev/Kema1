@@ -31,14 +31,14 @@ public:
             instance = new FileSizeScreamer;
         return instance;
     }
-    void refreshObserverWithPath(const QString&) const;
-    void addFilePath(const QString&);
-    void addFilePathList(const QStringList&);
-    void removeFileWithPath(const QString&);
+    void refreshObserver(const QString&) const;
+    void add(const QString&);
+    void addList(const QStringList&);
+    void remove(const QString&);
     int size() const;
-    int getFileSizeWithPath(const QString&) const;
+    int getFileSize(const QString&) const;
     void refresh() const;
-    QStringList getFilePathList() const;
+    QStringList getFileList() const;
     QString getAbsoluteFilePath(const QString&) const;
 public slots:
     void check();

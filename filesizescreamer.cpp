@@ -10,7 +10,7 @@ FileSizeScreamer::FileSizeScreamer(){
 }
 
 
-void FileSizeScreamer::addFilePath(const QString& additionalFilePath){
+void FileSizeScreamer::add(const QString& additionalFilePath){
     if (getIndexOfFile(additionalFilePath) < 0){
         fileInfoList.append(QFileInfo(additionalFilePath));
         fileSizeList.append(INT_MIN);
@@ -19,13 +19,13 @@ void FileSizeScreamer::addFilePath(const QString& additionalFilePath){
 }
 
 
-void FileSizeScreamer::addFilePathList(const QStringList& additionalFilePathList){
+void FileSizeScreamer::addList(const QStringList& additionalFilePathList){
     for (QString p: additionalFilePathList)
-        addFilePath(p);
+        add(p);
 }
 
 
-void FileSizeScreamer::removeFileWithFilePath(const QString& filePath){
+void FileSizeScreamer::remove(const QString& filePath){
     int delIndex = getIndexOfFile(filePath);
     if (delIndex >= 0)
         removeFileWithIndex(delIndex);
@@ -56,7 +56,7 @@ void FileSizeScreamer::refreshObserverWithIndex(const int i) const{
     emit fileWasChanged(fileInfoList[i].absoluteFilePath(), fileSizeList[i]);
 }
 
-void FileSizeScreamer::refreshObserverWithPath(const QString& path) const{
+void FileSizeScreamer::refreshObserver(const QString& path) const{
     return refreshObserverWithIndex(getIndexOfFile(path));
 }
 
@@ -76,7 +76,7 @@ QString FileSizeScreamer::getFilePathWithIndex(const int i) const{
     return fileInfoList[i].absoluteFilePath();
 }
 
-QStringList FileSizeScreamer::getFilePathList() const{
+QStringList FileSizeScreamer::getFileList() const{
     QStringList r;
     std::transform  (fileInfoList.begin(), fileInfoList.end(), r.begin(),
                     [](QFileInfo f) {return f.absoluteFilePath();});
@@ -88,7 +88,7 @@ QString FileSizeScreamer::getAbsoluteFilePath(const QString& path) const{
 }
 
 int FileSizeScreamer::getIndexOfFile(const QString& path) const{
-    return getFilePathList().indexOf(getAbsoluteFilePath(path));
+    return getFileList().indexOf(getAbsoluteFilePath(path));
 }
 
 int FileSizeScreamer::getFileSizeWithIndex(const int i) const{

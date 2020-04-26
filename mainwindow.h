@@ -18,7 +18,7 @@ public:
 private:
     Ui::MainWindow *ui;
     FileSizeScreamer* ScreamerInstance = FileSizeScreamer::getInstance();
-    QList<QPointer<FileObserver>> observerList;
+    ObserverTable observerCollection;
 public slots:
     void addToScreamer();
     void delFromScreamer();

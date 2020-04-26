@@ -20,6 +20,7 @@ SOURCES += \
         filesizescreamer.cpp \
         main.cpp \
         mainwindow.cpp \
+        observertable.cpp \
         utils.cpp
 
 # Default rules for deployment.
@@ -31,6 +32,7 @@ HEADERS += \
     fileobserver.h \
     filesizescreamer.h \
     mainwindow.h \
+    observertable.h \
     utils.h
 
 FORMS += \
