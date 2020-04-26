@@ -43,14 +43,16 @@ void MainWindow::addObserver(){
 }
 
 void MainWindow::delObserver() {
-    observerCollection.del(ui->observerListWidget->currentRow());
+    QItemSelectionModel *select = ui->observerDisplayWidget->selectionModel();
+    if (select->hasSelection())
+        observerCollection.del(select->selectedRows());
 }
 
 void MainWindow::renameObserver() {
-    int i = ui->observerListWidget->currentRow();
+    QItemSelectionModel *select = ui->observerDisplayWidget->selectionModel();
     QString newPath = ui->observerLine->text();
-    if (i>=0 && !newPath.isEmpty()){
-        observerCollection.rename(i, newPath);
+    if (!(newPath.isEmpty())) {
+        observerCollection.rename(select->selectedRows(), newPath);
         ScreamerInstance->refreshObserver(newPath);
     }
 }

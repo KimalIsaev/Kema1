@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include "filesizescreamer.h"
 #include <QMainWindow>
-
+#include "observertable.h"
 namespace Ui {
 class MainWindow;
 }
