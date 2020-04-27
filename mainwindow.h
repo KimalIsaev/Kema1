@@ -26,8 +26,7 @@ public slots:
     void addObserver();
     void delObserver();
     void renameObserver();
-    void updateObserverDisplayWidget();
-
+    void pushStandartValue();
 };
 
 #endif // MAINWINDOW_H

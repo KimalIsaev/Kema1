@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QApplication>
 #include "filesizescreamer.h"
 #include "fileobserver.h"
 #include "utils.h"
@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QTimer>
 #include <QStringList>
+#include <mainwindow.h>
 using namespace std;
 
 void printObserver(const QString &filePath, const int size){
@@ -15,10 +16,13 @@ void printObserver(const QString &filePath, const int size){
 int main(int argc, char *argv[])
 {
 
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    /*
     FileSizeScreamer *screamer = FileSizeScreamer::getInstance();
     QList<QPointer<FileObserver>> observerList;//definition at utils.h
-    /*
+
     observerList.append(QPointer<FileObserver>(new FileObserver("E:/qt/file/tum.txt")));
     observerList.append(QPointer<FileObserver>(new FileObserver("E:/qt/file/rum.txt")));
     observerList.append(QPointer<FileObserver>(new FileObserver("E:/qt/file/rum.txt")));
@@ -26,10 +30,10 @@ int main(int argc, char *argv[])
         QObject::connect(observ, &FileObserver::printSignal, printObserver);
     screamer->addFilePathList(utils::observerListToQStringList(observerList));
     utils::connectObserverList(observerList);
-    */
+
     screamer->check();
     utils::addOneToFile(observerList);
-    screamer->addFilePathList(utils::observerListToQStringList(observerList));
+   // screamer->addFilePathList(utils::observerListToQStringList(observerList));
     for(int i=0; i<200000; i++){
         observerList.append(QPointer<FileObserver>(new FileObserver("E:/qt/file/tum.txt")));
         utils::connectObserverList(observerList);
@@ -38,5 +42,6 @@ int main(int argc, char *argv[])
     }
     //for (QPointer<FileObserver> observ: observerList)
     //   delete observ.data();
+    */
     return a.exec();
 }

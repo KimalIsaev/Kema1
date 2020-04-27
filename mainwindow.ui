@@ -27,17 +27,17 @@
        </property>
        <widget class="QPushButton" name="pushStandartValueButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>StandartValue</string>
         </property>
        </widget>
        <widget class="QPushButton" name="delFromScreamerButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>delFromScreamer</string>
         </property>
        </widget>
        <widget class="QPushButton" name="addToScreamerButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>addToScreamer</string>
         </property>
        </widget>
       </widget>
@@ -63,17 +63,17 @@
        </property>
        <widget class="QPushButton" name="addObserverButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>addObserver</string>
         </property>
        </widget>
        <widget class="QPushButton" name="delObserverButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>delObserver</string>
         </property>
        </widget>
        <widget class="QPushButton" name="renameObserverButton">
         <property name="text">
-         <string>PushButton</string>
+         <string>renameObserver</string>
         </property>
        </widget>
       </widget>
@@ -95,5 +95,111 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushStandartValueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushStandartValue()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>71</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>delFromScreamerButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>delFromScreamer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>202</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addToScreamerButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addToScreamer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addObserverButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addObserver()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>delObserverButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>delObserver()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>596</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>renameObserverButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>renameObserver()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>727</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>updateScreamerDisplayWidget()</slot>
+  <slot>addToScreamer()</slot>
+  <slot>delFromScreamer()</slot>
+  <slot>addObserver()</slot>
+  <slot>delObserver()</slot>
+  <slot>renameObserver()</slot>
+  <slot>pushStandartValue()</slot>
+ </slots>
 </ui>

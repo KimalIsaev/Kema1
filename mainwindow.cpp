@@ -1,12 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->observerDisplayWidget->setModel(&observerCollection);
+    ui->observerDisplayWidget->show();
 }
 
 MainWindow::~MainWindow() {
@@ -22,7 +24,6 @@ void MainWindow::addToScreamer() {
     QString path = ui->screamerLine->text();
     if (!(path.isEmpty())) {
         ScreamerInstance->add(path);
-        QString absolutePath = ScreamerInstance->getAbsoluteFilePath(path);
         updateScreamerDisplayWidget();
         ScreamerInstance->refreshObserver(path);
     }
@@ -36,10 +37,10 @@ void MainWindow::delFromScreamer() {
 
 void MainWindow::addObserver(){
     QString path = ui->observerLine->text();
-    if (!(path.isEmpty())) {
+    if (!(path.isEmpty()))
         observerCollection.add(path);
-        ScreamerInstance->refreshObserver(path);
-    }
+    ui->observerDisplayWidget->setModel(&observerCollection);
+    ui->observerDisplayWidget->show();
 }
 
 void MainWindow::delObserver() {
@@ -51,12 +52,12 @@ void MainWindow::delObserver() {
 void MainWindow::renameObserver() {
     QItemSelectionModel *select = ui->observerDisplayWidget->selectionModel();
     QString newPath = ui->observerLine->text();
-    if (!(newPath.isEmpty())) {
+    if (!(newPath.isEmpty()) && select->hasSelection()) {
         observerCollection.rename(select->selectedRows(), newPath);
-        ScreamerInstance->refreshObserver(newPath);
     }
 }
 
-
-
+void MainWindow::pushStandartValue(){
+    ui->screamerLine->setText("E:\\qt\\file\\tum.txt");
+}
 
