@@ -10,6 +10,7 @@ class ObserverTable : public QAbstractTableModel
     static const constexpr int sizeColumn = 1;
     static const constexpr int numberOfColumns = 2;
     FileSizeScreamer* ScreamerInstance = FileSizeScreamer::getInstance();
+    void updateSize(FileObserver*);
 public:
     ObserverTable();
     Qt::ItemFlags flags(const QModelIndex& index) const override;

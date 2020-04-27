@@ -7,7 +7,7 @@ ObserverTable::ObserverTable()
 
 void ObserverTable::add(const QString& path){
     insertRow(observerList.size());
-    observerList[observerList.size()-1]->rename(path);
+    observerList[observerList.size()-1]->rename(ScreamerInstance->getAbsoluteFilePath(path));
     ScreamerInstance->refreshObserver(path);
     emit dataChanged(QAbstractItemModel::createIndex(observerList.size()-1, 0),
                      QAbstractItemModel::createIndex(observerList.size()-1, numberOfColumns-1),
@@ -18,15 +18,30 @@ bool ObserverTable::insertRows(int row, int count, const QModelIndex& index)
 {
     Q_UNUSED(index);
     beginInsertRows(QModelIndex(), row, row+count-1);
-    std::cout << count << std::endl;
     for (int i=0; i < count; i++) {
         QPointer<FileObserver> newObserver(new FileObserver(""));
         observerList.append(newObserver);
         QObject :: connect(ScreamerInstance, &FileSizeScreamer::fileWasChanged, newObserver.data(), &FileObserver::fileIsChanged);
+        QObject :: connect(newObserver.data(), &FileObserver::printSignal,
+                           [&](){std::cout << "connect" << std::endl;
+                                 std::cout << newObserver.data() << std::endl;
+                                 updateSize(newObserver.data());});
     }
-
     endInsertRows();
     return true;
+}
+
+void ObserverTable::updateSize(FileObserver* givenObserverPointer){
+    int i=0;
+    std::cout << "updateSize" << std::endl;
+    for (QPointer<FileObserver> observerPointer: observerList){
+        if (givenObserverPointer == observerPointer.data()){
+            QModelIndex updateIndex = QAbstractItemModel::createIndex(i, sizeColumn);
+            emit dataChanged(updateIndex, updateIndex, {Qt::DisplayRole});
+            break;
+        }
+        i++;
+    }
 }
 
 QList<int> indexListToRowList(const QModelIndexList& indexList){

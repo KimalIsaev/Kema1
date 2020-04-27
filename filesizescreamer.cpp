@@ -53,7 +53,7 @@ void FileSizeScreamer::checkFileWithIndex(const int i){
 }
 
 void FileSizeScreamer::refreshObserverWithIndex(const int i) const{
-    if (i>0)
+    if (i>=0)
         emit fileWasChanged(fileInfoList[i].absoluteFilePath(), fileSizeList[i]);
 }
 
@@ -78,7 +78,7 @@ QString FileSizeScreamer::getFilePathWithIndex(const int i) const{
 }
 
 QStringList FileSizeScreamer::getFileList() const{
-    QStringList r("");
+    QStringList r;
     for (QFileInfo f: fileInfoList)
         r.append(f.absoluteFilePath());
     return r;
