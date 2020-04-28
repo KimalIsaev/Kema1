@@ -1,5 +1,4 @@
 #include "observertable.h"
-#include <iostream>
 ObserverTable::ObserverTable()
 {
 
@@ -30,7 +29,6 @@ bool ObserverTable::insertRows(int row, int count, const QModelIndex& index)
 
 void ObserverTable::updateSize(FileObserver* givenObserverPointer){
     int i=0;
-    std::cout << "updateSize" << std::endl;
     for (QPointer<FileObserver> observerPointer: observerList){
         if (givenObserverPointer == observerPointer.data()){
             QModelIndex updateIndex = QAbstractItemModel::createIndex(i, sizeColumn);
@@ -54,7 +52,6 @@ void ObserverTable::del(const QModelIndexList& indexList){
         std::sort(rowList.begin(), rowList.end());
         int k=0;
         for (int i: rowList){
-            std::cout<<i-k<<std::endl;
             removeRow(i-k);
             k++;
         }

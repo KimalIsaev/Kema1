@@ -7,8 +7,6 @@
 #include <QTimer>
 #include <QTime>
 #include <QFileInfo>
-#include "utils.h"
-
 
 class FileSizeScreamer:public QObject
 {

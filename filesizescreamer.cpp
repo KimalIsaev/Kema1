@@ -1,8 +1,6 @@
 #include "filesizescreamer.h"
 
-
 FileSizeScreamer *FileSizeScreamer::instance = NULL;
-
 
 FileSizeScreamer::FileSizeScreamer(){
     connect(&checkClock, SIGNAL(timeout()), this, SLOT(check()));

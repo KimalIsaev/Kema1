@@ -2,6 +2,9 @@
 #define QOBSERVERTABLE_H
 #include "filesizescreamer.h"
 #include <QAbstractTableModel>
+#include "fileobserver.h"
+#include <QPointer>
+#include <QList>
 
 class ObserverTable : public QAbstractTableModel
 {

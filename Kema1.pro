@@ -20,8 +20,7 @@ SOURCES += \
         filesizescreamer.cpp \
         main.cpp \
         mainwindow.cpp \
-        observertable.cpp \
-        utils.cpp
+        observertable.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -32,8 +31,7 @@ HEADERS += \
     fileobserver.h \
     filesizescreamer.h \
     mainwindow.h \
-    observertable.h \
-    utils.h
+    observertable.h
 
 FORMS += \
     mainwindow.ui
