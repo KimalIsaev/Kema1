@@ -20,7 +20,7 @@ public:
 public slots:
     void fileIsChanged(const QString&, const int);
 signals:
-    void printSignal(const QString&, const int);
+    void printSignal(FileObserver*);
 };
 
 #endif // FILE_OBSERVER_H

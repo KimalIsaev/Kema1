@@ -26,5 +26,5 @@ void FileObserver::rename(const QString& givenFilePath){
 }
 
 void FileObserver::sendPrintSignal(){
-    emit printSignal(filePath, fileSize);
+    emit printSignal(this);
 }

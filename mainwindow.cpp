@@ -30,9 +30,10 @@ void MainWindow::addToScreamer() {
 }
 
 void MainWindow::delFromScreamer() {
-    QString path = ui->screamerListWidget->currentItem()->text();
-    ScreamerInstance->remove(path);
-    updateScreamerDisplayWidget();
+    if (!ui->screamerListWidget->selectedItems().isEmpty()){
+        ScreamerInstance->remove(ui->screamerListWidget->currentItem()->text());
+        updateScreamerDisplayWidget();
+    }
 }
 
 void MainWindow::addObserver(){

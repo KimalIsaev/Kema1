@@ -22,10 +22,7 @@ bool ObserverTable::insertRows(int row, int count, const QModelIndex& index)
         QPointer<FileObserver> newObserver(new FileObserver(""));
         observerList.append(newObserver);
         QObject :: connect(ScreamerInstance, &FileSizeScreamer::fileWasChanged, newObserver.data(), &FileObserver::fileIsChanged);
-        QObject :: connect(newObserver.data(), &FileObserver::printSignal,
-                           [&](){std::cout << "connect" << std::endl;
-                                 std::cout << newObserver.data() << std::endl;
-                                 updateSize(newObserver.data());});
+        QObject :: connect(newObserver.data(), &FileObserver::printSignal, this, &ObserverTable::updateSize);
     }
     endInsertRows();
     return true;
@@ -57,6 +54,7 @@ void ObserverTable::del(const QModelIndexList& indexList){
         std::sort(rowList.begin(), rowList.end());
         int k=0;
         for (int i: rowList){
+            std::cout<<i-k<<std::endl;
             removeRow(i-k);
             k++;
         }
@@ -67,7 +65,7 @@ bool ObserverTable::removeRows(int row, int count, const QModelIndex& index)
 {
     Q_UNUSED(index);
     beginRemoveRows(QModelIndex(), row, row+count-1);
-    for (int i=0; i < count; ++i) {
+    for (int i=row; i < row+count; ++i) {
         delete observerList[i].data();
         observerList.removeAt(i);
     }
@@ -79,8 +77,8 @@ void ObserverTable::rename(const QModelIndexList& indexList, const QString& path
     if (!(indexList.empty())){
         QList<int> rowList = indexListToRowList(indexList);
         for (int i: rowList){
-            observerList[i]->rename(path);
-            ScreamerInstance->refreshObserver(path);
+            observerList[i]->rename(ScreamerInstance->getAbsoluteFilePath(path));
+            ScreamerInstance->refreshObserver(ScreamerInstance->getAbsoluteFilePath(path));
         }
         for (QModelIndex i: indexList)
             emit dataChanged(i, i, {Qt::DisplayRole});
